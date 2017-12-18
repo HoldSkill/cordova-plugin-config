@@ -3,7 +3,7 @@
 
 @implementation CordovaPluginConfig
 
-- (void)LongPressFix {
+- (void)LongPressFix:(CDVInvokedUrlCommand*)command {
   self.lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGestures:)];
   self.lpgr.minimumPressDuration = 0.45f;
 
@@ -69,22 +69,20 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
 }
 - (void)getAudioPermission:(CDVInvokedUrlCommand*)command {
   NSString* jsString = nil;
-  int setStatus = 0;
   AVAudioSession *session = [AVAudioSession sharedInstance];
   if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
       [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
           if (granted) {
               // Microphone enabled code
               NSLog(@"Microphone is enabled..");
-              setStatus = 1;
+              jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config.CordovaPluginConfig').getAudioPermissionStatus", 1];
           }
           else {
               // Microphone disabled code
               NSLog(@"Microphone is disabled..");
-              setStatus = 0;
+              jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config.CordovaPluginConfig').getAudioPermissionStatus", 0];
           }
       }];
-      jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config.CordovaPluginConfig').getAudioPermissionStatus", setStatus];
       [self.commandDelegate evalJs:jsString];
   }
 }
