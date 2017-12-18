@@ -55,7 +55,7 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
         //没有询问是否开启麦克风
-            _checkStatus = true;
+            _checkStatus = false;
             break;
         case AVAuthorizationStatusRestricted:
         //未授权，家长限制
@@ -67,7 +67,7 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
             break;
         case AVAuthorizationStatusAuthorized:
         //授权
-            _checkStatus = false;
+            _checkStatus = true;
             break;
         default:
             break;
