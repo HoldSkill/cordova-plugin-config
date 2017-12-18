@@ -1,4 +1,5 @@
 #import "CordovaPluginConfig.h"
+#import <Cordova/CDV.h>
 
 @implementation CordovaPluginConfig
 
