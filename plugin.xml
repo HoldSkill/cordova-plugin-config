@@ -13,7 +13,7 @@
         <engine name="cordova" version=">=3.0.0" />
     </engines>
     <js-module name="CordovaPluginConfig" src="www/CordovaPluginConfig.js">
-        <clobbers target="AudioPermission" />
+        <clobbers target="CordovaPluginConfig" />
     </js-module>
     <!-- android -->
     <platform name="android">
@@ -25,7 +25,7 @@
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
         </config-file>
-        <source-file src="src/android/AudioPermission.java" target-dir="src/com/holdskill/CordovaPluginConfig/AudioPermission" />
+        <source-file src="src/android/CordovaPluginConfig.java" target-dir="src/com/holdskill/CordovaPluginConfig" />
     </platform>
     <platform name="ios">
         <config-file target="config.xml" parent="/*">

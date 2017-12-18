@@ -1,12 +1,12 @@
-var AudioPermission = {};
-AudioPermission.checkAudioPermission = function(str, callback) {
+var CordovaPluginConfig = {};
+CordovaPluginConfig.checkCordovaPluginConfig = function(str, callback) {
     cordova.exec(callback, function(error) {
         console.log('error get permission: ', error);
-    }, 'CordovaPluginConfig', 'checkAudioPermission');
+    }, 'CordovaPluginConfig', 'checkCordovaPluginConfig');
 }
-AudioPermission.getAudioPermission = function(str, callback) {
+CordovaPluginConfig.getCordovaPluginConfig = function(str, callback) {
     cordova.exec(callback, function(error) {
         console.log('error get permission: ', error);
-    }, 'CordovaPluginConfig', 'getAudioPermission');
+    }, 'CordovaPluginConfig', 'getCordovaPluginConfig');
 }
-module.exports = AudioPermission;
+module.exports = CordovaPluginConfig;
