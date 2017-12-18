@@ -35,11 +35,11 @@ public class CordovaPluginConfig extends CordovaPlugin
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if (action.equals("checkAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-				PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.TRUE);
+				PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
 				callbackContext.sendPluginResult(result);
 		   }
 		   else {
-				PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.FALSE);
+				PluginResult result = new PluginResult(PluginResult.Status.OK, 0);
 				callbackContext.sendPluginResult(result);
 		   }
 		   return true;
@@ -47,7 +47,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 	    if (action.equals("getAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-				PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.TRUE);
+				PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
 				callbackContext.sendPluginResult(result);
 		   }
 		   else {
@@ -79,7 +79,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 					return;
 		       }
 		       else {
-			  		PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.FALSE);
+			  		PluginResult result = new PluginResult(PluginResult.Status.OK, 0);
 		  			this.getPermissionCallbackContext.sendPluginResult(result);
 		       }
 	        }
@@ -89,7 +89,8 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 	private void promptForRecord() {
         if(PermissionHelper.hasPermission(this, permissions[WRITE_EXTERNAL_STORAGE]) && PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-
+	  		PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
+  			this.getPermissionCallbackContext.sendPluginResult(result);
         }
         else if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO]))
         {
