@@ -43,46 +43,44 @@
 
 - (BOOL)checkAudioPermission:(CDVInvokedUrlCommand*)command {
 AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
-    BOOL flag;
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
         //没有询问是否开启麦克风
-            flag = true;
+            checkStatus = true;
             break;
         case AVAuthorizationStatusRestricted:
         //未授权，家长限制
-            flag = false;
+            checkStatus = false;
             break;
         case AVAuthorizationStatusDenied:
         //未授权
-            flag = false;
+            checkStatus = false;
             break;
         case AVAuthorizationStatusAuthorized:
         //授权
-            flag = false;
+            checkStatus = false;
             break;
         default:
             break;
     }
-    return flag;
+    return checkStatus;
 }
 - (BOOL)getAudioPermission:(CDVInvokedUrlCommand*)command {
   AVAudioSession *session = [AVAudioSession sharedInstance];
-  BOOL flag;
   if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
       [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
           if (granted) {
               // Microphone enabled code
               NSLog(@"Microphone is enabled..");
-              flag = true;
+              setStatus = true;
           }
           else {
               // Microphone disabled code
               NSLog(@"Microphone is disabled..");
-              flag = false;
+              setStatus = false;
           }
       }];
-      return flag;
+      return setStatus;
   }
   return false;
 }
