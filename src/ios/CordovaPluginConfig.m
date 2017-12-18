@@ -8,8 +8,8 @@
  */
 - (void)pluginInitialize
 {
-  _checkStatus = false;
-  _setStatus = false;
+  _checkStatus = 0;
+  _setStatus = 0;
 }
 
 - (void)LongPressFix {
@@ -55,19 +55,19 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
         //没有询问是否开启麦克风
-            _checkStatus = false;
+            _checkStatus = -2;
             break;
         case AVAuthorizationStatusRestricted:
         //未授权，家长限制
-            _checkStatus = false;
+            _checkStatus = -1;
             break;
         case AVAuthorizationStatusDenied:
         //未授权
-            _checkStatus = false;
+            _checkStatus = 0;
             break;
         case AVAuthorizationStatusAuthorized:
         //授权
-            _checkStatus = true;
+            _checkStatus = 1;
             break;
         default:
             break;
@@ -76,25 +76,24 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
     [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
 }
 - (void)getAudioPermission:(CDVInvokedUrlCommand*)command {
+  NSString* jsString = nil;
   AVAudioSession *session = [AVAudioSession sharedInstance];
   if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
       [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
           if (granted) {
               // Microphone enabled code
               NSLog(@"Microphone is enabled..");
-              _setStatus = true;
+              _setStatus = 1;
           }
           else {
               // Microphone disabled code
               NSLog(@"Microphone is disabled..");
-              _setStatus = false;
+              _setStatus = 0;
           }
       }];
-      CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:_setStatus];
-      [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
+      jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config').getAudioPermissionStatus", _setStatus];
+      [self.commandDelegate evalJs:jsString];
   }
-  CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:false];
-  [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
 }
 
 @end
