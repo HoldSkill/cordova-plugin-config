@@ -1,10 +1,10 @@
 var CordovaPluginConfig = {};
-CordovaPluginConfig.checkAudioPermission = function(str, callback) {
+CordovaPluginConfig.checkAudioPermission = function(callback) {
     cordova.exec(callback, function(error) {
         console.log('error get permission: ', error);
     }, 'CordovaPluginConfig', 'checkAudioPermission');
 }
-CordovaPluginConfig.getAudioPermission = function(str, callback) {
+CordovaPluginConfig.getAudioPermission = function(callback) {
     cordova.exec(callback, function(error) {
         console.log('error get permission: ', error);
     }, 'CordovaPluginConfig', 'getAudioPermission');

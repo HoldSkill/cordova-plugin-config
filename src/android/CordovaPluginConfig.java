@@ -34,18 +34,27 @@ public class CordovaPluginConfig extends CordovaPlugin
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if (action.equals("checkAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-		      return true;
+				PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.TRUE);
+				callbackContext.sendPluginResult(result);
 		   }
-		   return false;
-	    }
+		   else {
+				PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.FALSE);
+				callbackContext.sendPluginResult(result);
+		   }
+		   return true;
+        }
 
 	    if (action.equals("getAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-		      return true;
+				PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.TRUE);
+				callbackContext.sendPluginResult(result);
 		   }
 		   else {
-		   	  getPermissionCallbackContext = callbackContext;
-		      getAudioPermission(RECORD_AUDIO);
+				getPermissionCallbackContext = callbackContext;
+				PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+				pluginResult.setKeepCallback(true);
+				callbackContext.sendPluginResult(pluginResult);
+				getAudioPermission(RECORD_AUDIO);
 
 		   }
 		   return true;
