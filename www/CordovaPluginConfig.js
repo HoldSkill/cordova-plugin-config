@@ -10,11 +10,7 @@ module.exports = {
     },
     getAudioPermission: function(callback) {
         console.log('CordovaPluginConfig.getAudioPermission');
-        this.callback = callback;
-        exec(null, this.AudioPermissionErrorEvent, 'CordovaPluginConfig', 'getAudioPermission', []);
-    },
-    getAudioPermissionStatus(status) {
-        this.callback(status);
+        exec(callback, this.AudioPermissionErrorEvent, 'CordovaPluginConfig', 'getAudioPermission', []);
     },
     AudioPermissionErrorEvent: function(e) {
         cordova.fireWindowEvent("AudioPermissionError", {
