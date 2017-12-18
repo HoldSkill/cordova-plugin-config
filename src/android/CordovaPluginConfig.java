@@ -26,8 +26,9 @@ public class CordovaPluginConfig extends CordovaPlugin
 
     private CallbackContext callbackContext = null;
     private CallbackContext getPermissionCallbackContext = null;
-	public static String[]  permissions = { Manifest.permission.RECORD_AUDIO };
-	public static int       RECORD_AUDIO = 0;
+	public static String[]  permissions = { Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    public static int RECORD_AUDIO = 0;
+    public static int WRITE_EXTERNAL_STORAGE = 1;
 	public static final int PERMISSION_DENIED_ERROR = 20;
 
 	@Override
@@ -62,6 +63,10 @@ public class CordovaPluginConfig extends CordovaPlugin
 	    return false;
     }
 
+    protected void getWritePermission(int requestCode)
+    {
+        PermissionHelper.requestPermission(this, requestCode, permissions[WRITE_EXTERNAL_STORAGE]);
+    }
     protected void getAudioPermission(int requestCode) {
         PermissionHelper.requestPermission(this, requestCode, permissions[RECORD_AUDIO]);
     }
@@ -79,12 +84,21 @@ public class CordovaPluginConfig extends CordovaPlugin
 		       }
 	        }
 	    }
-		if (this.getPermissionCallbackContext == null) {
-		   getAudioPermission(RECORD_AUDIO);
-		}
-		else {
-		   PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.TRUE);
-	   	   this.getPermissionCallbackContext.sendPluginResult(result);
-		}
+		promptForRecord(this.getPermissionCallbackContext);
 	}
+
+	private void promptForRecord(boolean withCompression) {
+        if(PermissionHelper.hasPermission(this, permissions[WRITE_EXTERNAL_STORAGE]) && PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
+
+        }
+        else if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO]))
+        {
+            getWritePermission(WRITE_EXTERNAL_STORAGE);
+        }
+        else
+        {
+            getAudioPermission(RECORD_AUDIO);
+        }
+
+    }
 }
