@@ -69,10 +69,10 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
 }
 - (void)getAudioPermission:(CDVInvokedUrlCommand*)command {
   NSString* jsString = nil;
+  int setStatus = 0;
   AVAudioSession *session = [AVAudioSession sharedInstance];
   if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
       [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
-        int setStatus = 0;
           if (granted) {
               // Microphone enabled code
               NSLog(@"Microphone is enabled..");
