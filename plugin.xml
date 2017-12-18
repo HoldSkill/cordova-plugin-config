@@ -37,7 +37,7 @@
                 <param name="ios-package" value="CordovaPluginConfig" />
             </feature>
         </config-file>
-        <source-file src="src/ios/CordovaPluginConfig.h" />
+        <header-file src="src/ios/CordovaPluginConfig.h" />
         <source-file src="src/ios/CordovaPluginConfig.m" />
         <framework src="Accelerate.framework" weak="true" />
         <framework src="CoreAudio.framework" weak="true" />
