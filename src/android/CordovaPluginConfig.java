@@ -28,6 +28,7 @@ public class CordovaPluginConfig extends CordovaPlugin
     private CallbackContext getPermissionCallbackContext = null;
 	public static String[]  permissions = { Manifest.permission.RECORD_AUDIO };
 	public static int       RECORD_AUDIO = 0;
+	public static final int PERMISSION_DENIED_ERROR = 20;
 
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -49,6 +50,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 		   }
 		   return true;
 	    }
+	    return false;
     }
 
     protected void getAudioPermission(int requestCode) {
@@ -59,18 +61,21 @@ public class CordovaPluginConfig extends CordovaPlugin
 	    for(int r:grantResults) {
 	        if(r == PackageManager.PERMISSION_DENIED) {
 		       if (this.getPermissionCallbackContext == null) {
-					return false;
+					this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, PERMISSION_DENIED_ERROR));
+					return;
 		       }
 		       else {
-			  		return true;
+			  		PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.FALSE);
+		  			this.getPermissionCallbackContext.sendPluginResult(result);
 		       }
 	        }
 	    }
 		if (this.getPermissionCallbackContext == null) {
-		   return false;
+		   getAudioPermission(RECORD_AUDIO);
 		}
 		else {
-		   return true;
+		   PluginResult result = new PluginResult(PluginResult.Status.OK, Boolean.TRUE);
+	   	   this.getPermissionCallbackContext.sendPluginResult(result);
 		}
 	}
 }
