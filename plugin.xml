@@ -27,13 +27,21 @@
         </config-file>
         <source-file src="src/android/CordovaPluginConfig.java" target-dir="src/com/holdskill/CordovaPluginConfig" />
     </platform>
+    <!-- ios -->
     <platform name="ios">
-        <config-file target="config.xml" parent="/*">
+        <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
+            <string>本应用需要获取录音权限</string>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
             <feature name="CordovaPluginConfig">
                 <param name="ios-package" value="CordovaPluginConfig" />
             </feature>
         </config-file>
-        <header-file src="src/ios/CordovaPluginConfig.h" />
+        <source-file src="src/ios/CordovaPluginConfig.h" />
         <source-file src="src/ios/CordovaPluginConfig.m" />
+        <framework src="Accelerate.framework" weak="true" />
+        <framework src="CoreAudio.framework" weak="true" />
+        <framework src="AudioToolbox.framework" weak="true" />
+        <framework src="AVFoundation.framework" weak="true" />
     </platform>
 </plugin>
