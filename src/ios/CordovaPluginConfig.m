@@ -91,7 +91,7 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
               _setStatus = 0;
           }
       }];
-      jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config').getAudioPermissionStatus", _setStatus];
+      jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config.CordovaPluginConfig').getAudioPermissionStatus", _setStatus];
       [self.commandDelegate evalJs:jsString];
   }
 }
