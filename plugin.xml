@@ -31,7 +31,6 @@
         <config-file target="config.xml" parent="/*">
             <feature name="CordovaPluginConfig">
                 <param name="ios-package" value="CordovaPluginConfig" />
-                <param name="onload" value="true" />
             </feature>
         </config-file>
         <header-file src="src/ios/CordovaPluginConfig.h" />

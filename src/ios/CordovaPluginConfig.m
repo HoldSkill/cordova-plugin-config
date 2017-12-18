@@ -3,7 +3,7 @@
 
 @implementation CordovaPluginConfig
 
-- (void)pluginInitialize {
+- (void)LongPressfix {
   self.lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGestures:)];
   self.lpgr.minimumPressDuration = 0.45f;
 
@@ -41,8 +41,9 @@
   }
 }
 
-- (void)checkAudioPermission:(CDVInvokedUrlCommand*)command {
+- (BOOL)checkAudioPermission:(CDVInvokedUrlCommand*)command {
 AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
+    BOOL flag;
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
         //没有询问是否开启麦克风
@@ -65,21 +66,25 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
     }
     return flag;
 }
-- (void)getAudioPermission:(CDVInvokedUrlCommand*)command {
+- (BOOL)getAudioPermission:(CDVInvokedUrlCommand*)command {
   AVAudioSession *session = [AVAudioSession sharedInstance];
-    if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
-        [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
-            if (granted) {
-                // Microphone enabled code
-                NSLog(@"Microphone is enabled..");
-                return true;
-            }
-            else {
-                // Microphone disabled code
-                NSLog(@"Microphone is disabled..");
-                return false;
-            }
-        }];
-    }
+  BOOL flag;
+  if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
+      [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
+          if (granted) {
+              // Microphone enabled code
+              NSLog(@"Microphone is enabled..");
+              flag = true;
+          }
+          else {
+              // Microphone disabled code
+              NSLog(@"Microphone is disabled..");
+              flag = false;
+          }
+      }];
+      return flag;
+  }
+  return false;
 }
+
 @end
