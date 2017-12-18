@@ -3,6 +3,15 @@
 
 @implementation CordovaPluginConfig
 
+/**
+ *  插件初始化主要用于appkey的注册
+ */
+- (void)pluginInitialize
+{
+  _checkStatus = false;
+  _setStatus = false;
+}
+
 - (void)LongPressFix {
   self.lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGestures:)];
   self.lpgr.minimumPressDuration = 0.45f;
@@ -46,24 +55,24 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
         //没有询问是否开启麦克风
-            checkStatus = true;
+            _checkStatus = true;
             break;
         case AVAuthorizationStatusRestricted:
         //未授权，家长限制
-            checkStatus = false;
+            _checkStatus = false;
             break;
         case AVAuthorizationStatusDenied:
         //未授权
-            checkStatus = false;
+            _checkStatus = false;
             break;
         case AVAuthorizationStatusAuthorized:
         //授权
-            checkStatus = false;
+            _checkStatus = false;
             break;
         default:
             break;
     }
-    return checkStatus;
+    return _checkStatus;
 }
 - (BOOL)getAudioPermission:(CDVInvokedUrlCommand*)command {
   AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -77,10 +86,10 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
           else {
               // Microphone disabled code
               NSLog(@"Microphone is disabled..");
-              setStatus = false;
+              _setStatus = false;
           }
       }];
-      return setStatus;
+      return _setStatus;
   }
   return false;
 }
