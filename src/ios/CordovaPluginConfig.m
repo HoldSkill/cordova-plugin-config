@@ -50,7 +50,7 @@
   }
 }
 
-- (BOOL)checkAudioPermission:(CDVInvokedUrlCommand*)command {
+- (void)checkAudioPermission:(CDVInvokedUrlCommand*)command {
 AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
@@ -72,9 +72,10 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
         default:
             break;
     }
-    return _checkStatus;
+    CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:_checkStatus];
+    [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
 }
-- (BOOL)getAudioPermission:(CDVInvokedUrlCommand*)command {
+- (void)getAudioPermission:(CDVInvokedUrlCommand*)command {
   AVAudioSession *session = [AVAudioSession sharedInstance];
   if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
       [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
@@ -89,9 +90,11 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
               _setStatus = false;
           }
       }];
-      return _setStatus;
+      CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:_setStatus];
+      [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
   }
-  return false;
+  CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:false];
+  [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
 }
 
 @end
