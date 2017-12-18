@@ -3,7 +3,7 @@
 
 @implementation CordovaPluginConfig
 
-- (void)LongPressfix {
+- (void)LongPressFix {
   self.lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGestures:)];
   self.lpgr.minimumPressDuration = 0.45f;
 
