@@ -81,7 +81,7 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
           if (granted) {
               // Microphone enabled code
               NSLog(@"Microphone is enabled..");
-              setStatus = true;
+              _setStatus = true;
           }
           else {
               // Microphone disabled code
