@@ -1,0 +1,32 @@
+{
+  "name": "cordova-plugin-config",
+  "version": "1.0.0",
+  "description": "The config of config.",
+  "cordova": {
+    "id": "cordova-plugin-config",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoldSkill/cordova-plugin-config.git"
+  },
+  "keywords": [
+    "cordova",
+    "cordova-plugin-config"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "HoldSkill Team",
+  "license": "Apache license 2.0",
+  "bugs": {
+    "url": "https://github.com/HoldSkill/cordova-plugin-config/issues"
+  },
+  "homepage": "https://github.com/HoldSkill/cordova-plugin-config#readme"
+}
