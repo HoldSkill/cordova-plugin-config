@@ -5,6 +5,7 @@
 @interface CordovaPluginConfig : CDVPlugin
 
 @property (nonatomic,strong) UILongPressGestureRecognizer *lpgr;
+@property (nonatomic, assign) BOOL checkStatus;
 - (void)LongPressFix:(CDVInvokedUrlCommand*)command;
 - (void)checkAudioPermission:(CDVInvokedUrlCommand*)command;
 - (void)getAudioPermission:(CDVInvokedUrlCommand*)command;

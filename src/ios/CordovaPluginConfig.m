@@ -3,6 +3,11 @@
 
 @implementation CordovaPluginConfig
 
+- (void)pluginInitialize
+{
+  _checkStatus = false;
+}
+
 - (void)LongPressFix:(CDVInvokedUrlCommand*)command {
   self.lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGestures:)];
   self.lpgr.minimumPressDuration = 0.45f;
@@ -43,48 +48,36 @@
 
 - (void)checkAudioPermission:(CDVInvokedUrlCommand*)command {
 AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
-    int checkStatus = 0;
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
         //没有询问是否开启麦克风
-            checkStatus = -2;
+            _checkStatus = false;
             break;
         case AVAuthorizationStatusRestricted:
         //未授权，家长限制
-            checkStatus = -1;
+            _checkStatus = false;
             break;
         case AVAuthorizationStatusDenied:
         //未授权
-            checkStatus = 0;
+            _checkStatus = false;
             break;
         case AVAuthorizationStatusAuthorized:
         //授权
-            checkStatus = 1;
+            _checkStatus = true;
             break;
         default:
             break;
     }
-    CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:checkStatus];
+    CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:_checkStatus];
     [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
 }
 - (void)getAudioPermission:(CDVInvokedUrlCommand*)command {
-  NSString* jsString = nil;
-  AVAudioSession *session = [AVAudioSession sharedInstance];
-  if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
-      [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
-          if (granted) {
-              // Microphone enabled code
-              NSLog(@"Microphone is enabled..");
-              jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config.CordovaPluginConfig').getAudioPermissionStatus", 1];
-          }
-          else {
-              // Microphone disabled code
-              NSLog(@"Microphone is disabled..");
-              jsString = [NSString stringWithFormat:@"%@(%d);", @"cordova.require('cordova-plugin-config.CordovaPluginConfig').getAudioPermissionStatus", 0];
-          }
-      }];
-      [self.commandDelegate evalJs:jsString];
-  }
+    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+      NSLog(@"permission : %d", granted);
+      CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted];
+      [result setKeepCallbackAsBool:NO];
+      [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }];
 }
 
 @end
