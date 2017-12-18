@@ -84,10 +84,10 @@ public class CordovaPluginConfig extends CordovaPlugin
 		       }
 	        }
 	    }
-		promptForRecord(this.getPermissionCallbackContext);
+		promptForRecord();
 	}
 
-	private void promptForRecord(boolean withCompression) {
+	private void promptForRecord() {
         if(PermissionHelper.hasPermission(this, permissions[WRITE_EXTERNAL_STORAGE]) && PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
 
         }
