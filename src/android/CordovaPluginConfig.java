@@ -3,6 +3,7 @@ package com.holdskill.CordovaPluginConfig;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
+import org.apache.cordova.LOG;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,15 +30,18 @@ public class CordovaPluginConfig extends CordovaPlugin
 	public static String[]  permissions = { Manifest.permission.RECORD_AUDIO};
     public static int RECORD_AUDIO = 0;
 	public static final int PERMISSION_DENIED_ERROR = 0;
+	private static final String LOG_TAG = "CordovaPluginConfig";
 
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if (action.equals("checkAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
+		   		LOG.d(LOG_TAG, "checkAudioPermission:1");
 				PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
 				callbackContext.sendPluginResult(result);
 		   }
 		   else {
+		   		LOG.d(LOG_TAG, "checkAudioPermission:0");
 				PluginResult result = new PluginResult(PluginResult.Status.OK, 0);
 				callbackContext.sendPluginResult(result);
 		   }
@@ -46,6 +50,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 	    if (action.equals("getAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
+		   		LOG.d(LOG_TAG, "getAudioPermission:已经获取过权限");
 				PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
 				callbackContext.sendPluginResult(result);
 		   }
@@ -68,6 +73,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 	public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
 	    for(int r:grantResults) {
+	    	LOG.d(LOG_TAG, "getAudioPermission:onRequestPermissionResult + " + r);
 	        if(r == PackageManager.PERMISSION_DENIED) {
 		       if (this.getPermissionCallbackContext == null) {
 					this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, PERMISSION_DENIED_ERROR));
