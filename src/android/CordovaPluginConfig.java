@@ -45,7 +45,6 @@ public class CordovaPluginConfig extends CordovaPlugin
 				PluginResult result = new PluginResult(PluginResult.Status.OK, 0);
 				callbackContext.sendPluginResult(result);
 		   }
-		   return true;
         }
 
 	    if (action.equals("getAudioPermission")) {
@@ -60,9 +59,9 @@ public class CordovaPluginConfig extends CordovaPlugin
 				pluginResult.setKeepCallback(true);
 				callbackContext.sendPluginResult(pluginResult);
 				getAudioPermission(RECORD_AUDIO);
+				return;
 
 		   }
-		   return true;
 	    }
 	    return false;
     }

@@ -13,6 +13,7 @@ module.exports = {
         exec(callback, this.AudioPermissionErrorEvent, 'CordovaPluginConfig', 'getAudioPermission', []);
     },
     AudioPermissionErrorEvent: function(e) {
+        console.log(e);
         cordova.fireWindowEvent("AudioPermissionError", {
             message: e
         });
