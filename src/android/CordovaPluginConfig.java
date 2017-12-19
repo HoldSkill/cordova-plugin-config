@@ -36,12 +36,12 @@ public class CordovaPluginConfig extends CordovaPlugin
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if (action.equals("checkAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-		   		LOG.d(LOG_TAG, "checkAudioPermission:1");
+		   		LOG.e(LOG_TAG, "checkAudioPermission:1");
 				PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
 				callbackContext.sendPluginResult(result);
 		   }
 		   else {
-		   		LOG.d(LOG_TAG, "checkAudioPermission:0");
+		   		LOG.e(LOG_TAG, "checkAudioPermission:0");
 				PluginResult result = new PluginResult(PluginResult.Status.OK, 0);
 				callbackContext.sendPluginResult(result);
 		   }
@@ -49,7 +49,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 	    if (action.equals("getAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-		   		LOG.d(LOG_TAG, "getAudioPermission:已经获取过权限");
+		   		LOG.e(LOG_TAG, "getAudioPermission:已经获取过权限");
 				PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
 				callbackContext.sendPluginResult(result);
 		   }
@@ -59,7 +59,6 @@ public class CordovaPluginConfig extends CordovaPlugin
 				pluginResult.setKeepCallback(true);
 				callbackContext.sendPluginResult(pluginResult);
 				getAudioPermission(RECORD_AUDIO);
-				return;
 
 		   }
 	    }
@@ -72,7 +71,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 	public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
 	    for(int r:grantResults) {
-	    	LOG.d(LOG_TAG, "getAudioPermission:onRequestPermissionResult + " + r);
+	    	LOG.e(LOG_TAG, "getAudioPermission:onRequestPermissionResult + " + r);
 	        if(r == PackageManager.PERMISSION_DENIED) {
 		       if (this.getPermissionCallbackContext == null) {
 					this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, PERMISSION_DENIED_ERROR));
