@@ -72,12 +72,15 @@ AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaT
     [self.commandDelegate sendPluginResult:commandResult callbackId:command.callbackId];
 }
 - (void)getAudioPermission:(CDVInvokedUrlCommand*)command {
-    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-      NSLog(@"permission : %d", granted);
-      CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted];
-      [result setKeepCallbackAsBool:NO];
-      [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-    }];
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    if ([session respondsToSelector:@selector(requestRecordPermission:)]) {
+        [session performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
+            NSLog(@"permission : %d", granted);
+            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:granted];
+            [result setKeepCallbackAsBool:NO];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        }];
+    }
 }
 
 @end
