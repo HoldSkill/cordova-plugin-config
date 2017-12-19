@@ -19,7 +19,7 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="CordovaPluginConfig">
-                <param name="android-package" value="com.holdskill.CordovaPluginConfig" />
+                <param name="android-package" value="com.holdskill.cordova.extend" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml">
@@ -28,7 +28,7 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
-        <source-file src="src/android/CordovaPluginConfig.java" target-dir="src/com/holdskill/CordovaPluginConfig" />
+        <source-file src="src/android/CordovaPluginConfig.java" target-dir="src/com/holdskill/cordova/extend" />
     </platform>
     <!-- ios -->
     <platform name="ios">

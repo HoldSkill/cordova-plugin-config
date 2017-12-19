@@ -1,4 +1,4 @@
-package com.holdskill.CordovaPluginConfig;
+package com.holdskill.cordova.extend;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
