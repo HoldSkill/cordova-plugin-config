@@ -14,13 +14,12 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
+import android.Manifest;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.content.pm.PackageManager;
 import org.apache.cordova.PermissionHelper;
-import android.Manifest;
 
 public class CordovaPluginConfig extends CordovaPlugin
 {
@@ -34,6 +33,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    	this.callbackContext = callbackContext;
 		if (action.equals("checkAudioPermission")) {
 		   if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
 		   		LOG.e(LOG_TAG, "checkAudioPermission:1");
@@ -62,7 +62,7 @@ public class CordovaPluginConfig extends CordovaPlugin
 
 		   }
 	    }
-	    return false;
+	    return true;
     }
 
     protected void getAudioPermission(int requestCode) {
