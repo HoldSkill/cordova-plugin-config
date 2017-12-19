@@ -78,10 +78,10 @@ public class CordovaPluginConfig extends CordovaPlugin
 		  			this.getPermissionCallbackContext.sendPluginResult(result);
 		       }
 	        }
+	        else{
+				PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
+	  			this.getPermissionCallbackContext.sendPluginResult(result);
+			}
 	    }
-		else{
-			PluginResult result = new PluginResult(PluginResult.Status.OK, 1);
-  			this.getPermissionCallbackContext.sendPluginResult(result);
-		}
 	}
 }
