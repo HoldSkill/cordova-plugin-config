@@ -19,7 +19,7 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="CordovaPluginConfig">
-                <param name="android-package" value="com.holdskill.cordova.extend" />
+                <param name="android-package" value="com.holdskill.cordova.extend.CordovaPluginConfig" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml">
