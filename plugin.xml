@@ -10,7 +10,7 @@
     <repo>https://github.com/HoldSkill/cordova-plugin-config.git</repo>
     <issue>https://github.com/HoldSkill/cordova-plugin-config/issues</issue>
     <engines>
-        <engine name="cordova" version=">=3.0.0" />
+        <engine name="cordova-android" version=">=6.3.0" />
     </engines>
     <js-module name="CordovaPluginConfig" src="www/CordovaPluginConfig.js">
         <clobbers target="CordovaPluginConfig" />
