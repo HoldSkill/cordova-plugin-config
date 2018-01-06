@@ -17,12 +17,12 @@
     </js-module>
     <!-- android -->
     <platform name="android">
-        <config-file parent="/*" target="res/xml/config.xml">
+        <config-file target="res/xml/config.xml" parent="/*">
             <feature name="CordovaPluginConfig">
                 <param name="android-package" value="com.holdskill.cordova.extend.CordovaPluginConfig" />
             </feature>
         </config-file>
-        <config-file parent="/*" target="AndroidManifest.xml">
+        <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
         </config-file>
         <source-file src="src/android/CordovaPluginConfig.java" target-dir="src/com/holdskill/cordova/extend" />
@@ -32,7 +32,7 @@
         <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
             <string>本应用需要获取录音权限</string>
         </config-file>
-        <config-file parent="/*" target="config.xml">
+        <config-file target="config.xml" parent="/*">
             <feature name="CordovaPluginConfig">
                 <param name="ios-package" value="CordovaPluginConfig" />
             </feature>
